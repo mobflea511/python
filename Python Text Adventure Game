@@ -1,0 +1,98 @@
+import time
+
+def game_intro():
+    print("Welcome to the World of Scripting!")
+    time.sleep(1)
+    print("In this world, there are 6 certification rooms you must complete before entering the job market.")
+    time.sleep(2)
+    print("If you enter the job market without all certifications...")
+    time.sleep(2)
+    print("You may end up in a job you don't want.")
+    print("\nGood luck!\n")
+
+
+game_intro()
+
+# Fixed and consistent room names
+rooms = {
+    'Introduction Class': {'East': 'Expressions'},
+
+    'Expressions': {
+        'North': 'Variables',
+        'South': 'Strings & Data Types',
+        'East': 'Loops & Functions',
+        'West': 'Introduction Class'
+    },
+
+    'Variables': {
+        'East': 'Branching',
+        'South': 'Expressions'
+    },
+
+    'Strings & Data Types': {
+        'North': 'Expressions',
+        'East': 'Lists & Dictionaries',
+        'South': 'The Job Market'
+    },
+
+    'Branching': {
+        'West': 'Variables',
+        'South': 'Loops & Functions'
+    },
+
+    'Loops & Functions': {
+        'North': 'Branching',
+        'West': 'Expressions'
+    },
+
+    'Lists & Dictionaries': {
+        'West': 'Strings & Data Types',
+        'South': 'The Job Market'
+    },
+
+    'The Job Market': {
+        'North': 'Lists & Dictionaries'
+    }
+}
+
+current_room = 'Introduction Class'
+inventory = []
+required_rooms = [
+    'Expressions',
+    'Variables',
+    'Strings & Data Types',
+    'Branching',
+    'Loops & Functions',
+    'Lists & Dictionaries'
+]
+
+visited = []
+
+while current_room != 'Exit':
+
+    print("\n==============================")
+    print("You are in:", current_room)
+
+    if current_room not in visited and current_room != 'The Job Market':
+        visited.append(current_room)
+
+    print("You can move:", list(rooms[current_room].keys()))
+    print("Rooms completed:", len(visited), "/ 6")
+
+    if current_room == 'The Job Market':
+        if len(visited) >= 6:
+            print("\n🎉 You entered the Job Market fully certified. You WIN!")
+        else:
+            print("\n❌ You entered the Job Market without enough certifications. Game Over.")
+        break
+
+    move = input("Enter direction (or type Exit): ").capitalize()
+
+    if move == "Exit":
+        print("Exiting game...")
+        break
+
+    if move in rooms[current_room]:
+        current_room = rooms[current_room][move]
+    else:
+        print("Invalid move. Try again.")
